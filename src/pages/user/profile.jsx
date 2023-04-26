@@ -12,7 +12,11 @@ import { Page, Link, Toolbar, Row, Col, f7 } from "framework7-react";
 import ToolBarBottom from "../../components/ToolBarBottom";
 import UserService from "../../service/user.service";
 import Skeleton from "react-loading-skeleton";
-import { REMOVE_BADGE, SEND_TOKEN_FIREBASE, SET_BADGE } from "../../constants/prom21";
+import {
+  REMOVE_BADGE,
+  SEND_TOKEN_FIREBASE,
+  SET_BADGE,
+} from "../../constants/prom21";
 import { iOS } from "../../constants/helpers";
 
 export default class extends React.Component {
@@ -103,6 +107,7 @@ export default class extends React.Component {
     return (
       <Page
         name="profile-list"
+        className="bg-white"
         noNavbar
         ptr
         infiniteDistance={50}
@@ -136,7 +141,7 @@ export default class extends React.Component {
             </Link>
           </div>
           {isLoading ? (
-            <div className="profile-info__basic">
+            <div className="profile-info__basic border-bottom">
               <div className="name">
                 <Skeleton width={100} count={1} />
               </div>
@@ -145,86 +150,65 @@ export default class extends React.Component {
               </div>
             </div>
           ) : (
-            <div className="profile-info__basic">
+            <div className="profile-info__basic border-bottom">
               <div className="name">{memberInfo && memberInfo.FullName}</div>
               <div className="group">
                 {this.checkMember(memberInfo && memberInfo)}
               </div>
             </div>
           )}
-
-          <div className="profile-info__shortcuts">
-            <div className="profile-info__shortcut">
-              <Row>
-                <Col width="50">
-                  <div className="profile-info__shortcut-item">
-                    <Link noLinkClass href="/detail-profile/">
-                      Thông tin cá nhân
-                    </Link>
-                  </div>
-                </Col>
-                <Col width="50">
-                  <div className="profile-info__shortcut-item">
-                    <Link noLinkClass href="/barcode/">
-                      Check In
-                    </Link>
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </div>
         </div>
-        <div className="profile-function">
-          <Row>
-            <Col width="33">
-              <Link noLinkClass href="/wallet/">
-                <div className="image">
-                  <img src={imgWallet} />
+        <div className="page-detail-profile h-auto">
+          <div className="page-detail-profile__box">
+            <Link href="/detail-profile/" className="page-detail-profile__item">
+              <div className="name">Thông tin cá nhân</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Ví & Thẻ tiền</span>
-              </Link>
-            </Col>
-            <Col width="33">
-              <Link noLinkClass href="/diary/">
-                <div className="image">
-                  <img src={imgDiary} />
+              </div>
+            </Link>
+            <Link href="/wallet/" className="page-detail-profile__item">
+              <div className="name">Ví điện tử</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Nhật ký</span>
-              </Link>
-            </Col>
-            <Col width="33">
-              <Link noLinkClass href="/order/">
-                <div className="image">
-                  <img src={imgOrder} />
+              </div>
+            </Link>
+            <Link href="/order/" className="page-detail-profile__item">
+              <div className="name">Đơn hàng</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Đơn hàng</span>
-              </Link>
-            </Col>
-            <Col width="33">
-              <Link noLinkClass href="/voucher/">
-                <div className="image">
-                  <img src={imgCoupon} />
+              </div>
+            </Link>
+            <Link href="/voucher/" className="page-detail-profile__item">
+              <div className="name">Mã giảm giá</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Mã giảm giá</span>
-              </Link>
-            </Col>
-            <Col width="33">
-              <Link noLinkClass href="/rating/">
-                <div className="image">
-                  <img src={imgEvaluate} />
+              </div>
+            </Link>
+            <Link href="/affiliate/" className="page-detail-profile__item">
+              <div className="name">Chính sách Affiliate</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Đánh giá</span>
-              </Link>
-            </Col>
-            <Col width="33">
-              <Link noLinkClass href="/maps/">
-                <div className="image">
-                  <img src={imgLocation} />
+              </div>
+            </Link>
+            <Link href="/maps/" className="page-detail-profile__item pb-0">
+              <div className="name">Liên hệ</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
                 </div>
-                <span>Liên hệ</span>
-              </Link>
-            </Col>
-          </Row>
+              </div>
+            </Link>
+          </div>
         </div>
         <Toolbar tabbar position="bottom">
           <ToolBarBottom />

@@ -5,10 +5,7 @@ import UserService from '../../service/user.service'
 import IconSearch from '../../assets/images/icon-search.png'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { FaRegUser, FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa'
-// const ModalReviews = React.lazy(() => import("../../components/ModalReviews"));
-// const SelectStock = React.lazy(() => import("../../components/SelectStock"));
-import ModalReviews from '../../components/ModalReviews'
+import { FaMapMarkerAlt, FaChevronDown } from 'react-icons/fa'
 import SelectStock from '../../components/SelectStock'
 import CartToolBar from '../../components/CartToolBar'
 import ToolBarBottom from '../../components/ToolBarBottom'
@@ -22,15 +19,10 @@ import {
   removeStockNameStorage,
   setUserLoginStorage,
   setUserStorage,
-  getUserLoginStorage,
 } from '../../constants/user'
 import ListService from './components/Service/ListService'
 import SlideList from '../home/components/BannerSlide/SlideList'
 import SlideListCenter from './components/BannerSlide/SlideListCenter'
-import ListImage from '../home/components/Customer/ListImage'
-// const ListImage = React.lazy(() =>
-//   import("../home/components/Customer/ListImage")
-// );
 import NewsList from '../home/components/news/NewsList'
 // const NewsList = React.lazy(() => import("../home/components/news/NewsList"));
 // const QuickAction = React.lazy(() => import("../../components/quickAction"));
@@ -40,8 +32,6 @@ import QuickAction from '../../components/quickAction'
 // );
 import ProductList from '../home/components/Product/ProductList'
 import ModalChangePWD from '../../components/ModalChangePWD'
-import ServiceHot2 from "./components/ServiceHot/ServiceHot2";
-import ServiceHot from "./components/ServiceHot/ServiceHot";
 
 export default class extends React.Component {
   constructor() {
@@ -188,7 +178,7 @@ export default class extends React.Component {
       >
         <Sheet
           opened={opened}
-          style={{ height: 'auto', '--f7-sheet-bg-color': '#fff' }}
+          style={{ height: "auto", "--f7-sheet-bg-color": "#fff" }}
           backdrop
           closeByBackdropClick={false}
         >
@@ -211,7 +201,7 @@ export default class extends React.Component {
                     >
                       <FaMapMarkerAlt />
                       <div className="location-name">
-                        {stockName && stockName ? stockName : 'Bạn đang ở ?'}
+                        {stockName && stockName ? stockName : "Bạn đang ở ?"}
                       </div>
                       <div className="down">
                         <FaChevronDown />
@@ -236,20 +226,16 @@ export default class extends React.Component {
                   </div>
                   <SlideList BannerName="App.Banner" autoplaySpeed={3000} />
                   <ListService
-                    className={`mt-15px ${getUser() ? '' : 'mb-10px'}`}
+                    className={`mt-15px ${getUser() ? "" : "mb-10px"}`}
                     id="42"
                   />
-                  {getUser() && <ListService className="my-10px" id="45" />}
                 </div>
               </div>
-              <ServiceHot2 id={57} f7router={this.$f7router} f7={this.$f7} />
-              <ServiceHot f7router={this.$f7router} />
-              <ListImage />
               <SlideList
                 className={`banner-main bg-white ${
                   window.GlobalConfig.APP.Home?.SliderFull
-                    ? 'mb-8px'
-                    : 'px-15px pt-15px'
+                    ? "mb-8px"
+                    : "px-15px pt-15px"
                 } `}
                 BannerName="App.Main"
                 autoplaySpeed={4000}
@@ -267,11 +253,8 @@ export default class extends React.Component {
                   autoplaySpeed={4500}
                 />
               )}
-              <SlideList
-                containerClass="pl-15px pr-15px slider-hot"
-                BannerName="App.DVHOT"
-              />
-              <ProductList />
+              <ProductList Status="2,3" Title="Sản phẩm bán chạy" Ps={6} />
+              <ProductList Status="1" Title="Sản phẩm mới" Ps={6} />
               <NewsList />
             </div>
           </div>
@@ -285,9 +268,8 @@ export default class extends React.Component {
           nameStock={(name) => this.nameStock(name)}
           isReload={isReload}
         />
-        <ModalReviews />
         <QuickAction />
       </Page>
-    )
+    );
   }
 }

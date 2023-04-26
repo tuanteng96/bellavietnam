@@ -235,3 +235,9 @@ html.with-panel-left-reveal .panel-backdrop-in {
         }
     }
 }
+
+input {
+    &.is-invalid.solid-invalid {
+        border: 1px solid #F64E60 !important;
+    }
+}

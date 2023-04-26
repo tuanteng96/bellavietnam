@@ -14,7 +14,7 @@ export default class ProductList extends React.Component {
   }
 
   componentDidMount() {
-    this.getDataList("794,10106", "1", 4, "", "");
+    this.getDataList("794", "1", this.props.Ps || 4, "", "");
   }
 
   getDataList = (ID, pi, ps, tag, keys) => {
@@ -28,7 +28,7 @@ export default class ProductList extends React.Component {
     if (!stockid) {
       stockid = 0;
     }
-    ShopDataService.getList(ID, pi, ps, tag, keys, stockid, "2")
+    ShopDataService.getList(ID, pi, ps, tag, keys, stockid, this.props.Status)
       .then((response) => {
         const arrCateList = response.data.data.lst;
         this.setState({
@@ -52,7 +52,7 @@ export default class ProductList extends React.Component {
                 <div className="head">
                   <h5>
                     <Link href="/shop/794/">
-                      Sản phẩm hot <i className="las la-angle-right"></i>
+                      {this.props.Title} <i className="las la-angle-right"></i>
                     </Link>
                   </h5>
                 </div>

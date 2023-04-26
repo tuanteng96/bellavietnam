@@ -80,7 +80,7 @@ export default class extends React.Component {
         {!isLoading && arrayItem ? (
           <div className="page-render p-0 no-bg">
             <div className="page-news">
-              <div className="page-news__detail">
+              <div className="page-news__detail bg-transparent">
                 <div className="page-news__detail-img">
                   <img src={SERVER_APP + arrayItem.Thumbnail_web} />
                 </div>

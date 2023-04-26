@@ -336,30 +336,12 @@ export default class extends React.Component {
               </Link>
             </div>
             <div className="page-navbar__title">
-              <span className="title">Ví & Thẻ tiền</span>
+              <span className="title">Ví điện tử</span>
             </div>
             <div className="page-navbar__noti">
               <NotificationIcon />
             </div>
           </div>
-          <Subnavbar className="wallet-subnavbar">
-            <div className="wallet-subnavbar-list">
-              <Link
-                noLinkClass
-                tabLinkActive={tabCurrent === "wallet"}
-                onClick={() => this.setState({ tabCurrent: "wallet" })}
-              >
-                Ví điện tử
-              </Link>
-              <Link
-                noLinkClass
-                tabLinkActive={tabCurrent === "card"}
-                onClick={() => this.setState({ tabCurrent: "card" })}
-              >
-                Thẻ tiền
-              </Link>
-            </div>
-          </Subnavbar>
         </Navbar>
         <Tabs className="h-100">
           <Tab

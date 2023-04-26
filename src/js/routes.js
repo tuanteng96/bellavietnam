@@ -37,6 +37,7 @@ import BarCodePage from '../pages/user/userBarcode';
 import OrderPage from '../pages/user/userOrder';
 import EditEmailPage from '../pages/user/editEmail';
 import EditPasswordPage from '../pages/user/editPassword';
+import AffiliatePage from '../pages/user/Affiliate/Affiliate'
 
 //Employee - Nhân viên
 
@@ -218,6 +219,14 @@ var routes = [{
     {
         path: '/profile/',
         asyncComponent: () => ProfilePage,
+        options: {
+            transition: 'f7-cover',
+        },
+        beforeEnter: checkAuth
+    },
+    {
+        path: '/affiliate/',
+        asyncComponent: () => AffiliatePage,
         options: {
             transition: 'f7-cover',
         },
