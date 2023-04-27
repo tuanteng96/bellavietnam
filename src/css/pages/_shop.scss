@@ -15,7 +15,8 @@
             white-space: nowrap;
             min-width: auto !important;
             padding: 0 !important;
-            &.active {
+            &.active,
+            &.tab-link-active {
                 color: $color-app;
                 &::before {
                     content: "";
@@ -982,6 +983,17 @@
                     width: 100%;
                 }
             }
+        }
+    }
+}
+
+.slider-full {
+    .slick-dots {
+        bottom: 15px;
+        li {
+            width: auto;
+            height: auto;
+            margin: 0;
         }
     }
 }

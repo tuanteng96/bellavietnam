@@ -22,6 +22,7 @@ import RenderTagsProd from "./components/RenderTagsProd";
 import { TruncateLines } from "react-truncate-lines";
 import clsx from "clsx";
 import { toast } from "react-toastify";
+import SlideList from "../home/components/BannerSlide/SlideList";
 
 const ButtonCart = ({ item, f7, f7router }) => {
   const [loading, setLoading] = useState(false);
@@ -377,6 +378,13 @@ export default class extends React.Component {
                 : "no-bg p-15px"
             )}
           >
+            {Number(currentId) === 794 && (
+              <SlideList
+                BannerName="App.Muahang"
+                autoplaySpeed={3000}
+                containerClass="mb-15px"
+              />
+            )}
             <div className="page-shop__list">
               <Row>
                 {!loading && (

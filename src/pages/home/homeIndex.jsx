@@ -187,7 +187,7 @@ export default class extends React.Component {
         <div className="page-wrapper">
           <div className="page-render p-0">
             <div className="home-page">
-              <div className="home-page__header">
+              <div className="home-page__header pb-10px">
                 <div
                   className="top"
                   style={{
@@ -231,6 +231,7 @@ export default class extends React.Component {
                   />
                 </div>
               </div>
+              <ProductList Status="2" Title="Sản phẩm HOT" Ps={6} />
               <SlideList
                 className={`banner-main bg-white ${
                   window.GlobalConfig.APP.Home?.SliderFull
@@ -253,8 +254,9 @@ export default class extends React.Component {
                   autoplaySpeed={4500}
                 />
               )}
-              <ProductList Status="2,3" Title="Sản phẩm bán chạy" Ps={6} />
-              <ProductList Status="1" Title="Sản phẩm mới" Ps={6} />
+
+              <ProductList Status="1" Title="Sản phẩm mới" Ps={4} />
+              <ProductList Status="3" Title="Sản phẩm Sale" Ps={4} />
               <NewsList />
             </div>
           </div>

@@ -38,6 +38,8 @@ import OrderPage from '../pages/user/userOrder';
 import EditEmailPage from '../pages/user/editEmail';
 import EditPasswordPage from '../pages/user/editPassword';
 import AffiliatePage from '../pages/user/Affiliate/Affiliate'
+import PolicyPage from '../pages/user/Policy/Policy'
+import MemberCommissionPage from '../pages/user/MemberCommission/MemberCommission'
 
 //Employee - Nhân viên
 
@@ -231,6 +233,21 @@ var routes = [{
             transition: 'f7-cover',
         },
         beforeEnter: checkAuth
+    },
+    {
+        path: '/commission/',
+        asyncComponent: () => MemberCommissionPage,
+        options: {
+            transition: 'f7-cover',
+        },
+        beforeEnter: checkAuth
+    },
+    {
+        path: '/policy/',
+        asyncComponent: () => PolicyPage,
+        options: {
+            transition: 'f7-cover',
+        }
     },
     {
         path: '/detail-profile/',

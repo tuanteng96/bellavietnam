@@ -160,8 +160,8 @@ export default class extends React.Component {
         </div>
         <div className="page-detail-profile h-auto">
           <div className="page-detail-profile__box">
-            <Link href="/detail-profile/" className="page-detail-profile__item">
-              <div className="name">Thông tin cá nhân</div>
+            <Link href="/order/" className="page-detail-profile__item">
+              <div className="name">Quản lý đơn hàng</div>
               <div className="content">
                 <div className="content-text">
                   <i className="las la-angle-right"></i>
@@ -176,24 +176,16 @@ export default class extends React.Component {
                 </div>
               </div>
             </Link>
-            <Link href="/order/" className="page-detail-profile__item">
-              <div className="name">Đơn hàng</div>
-              <div className="content">
-                <div className="content-text">
-                  <i className="las la-angle-right"></i>
-                </div>
-              </div>
-            </Link>
-            <Link href="/voucher/" className="page-detail-profile__item">
-              <div className="name">Mã giảm giá</div>
-              <div className="content">
-                <div className="content-text">
-                  <i className="las la-angle-right"></i>
-                </div>
-              </div>
-            </Link>
             <Link href="/affiliate/" className="page-detail-profile__item">
               <div className="name">Chính sách Affiliate</div>
+              <div className="content">
+                <div className="content-text">
+                  <i className="las la-angle-right"></i>
+                </div>
+              </div>
+            </Link>
+            <Link href="/commission/" className="page-detail-profile__item">
+              <div className="name">Thành viên & Hoa hồng</div>
               <div className="content">
                 <div className="content-text">
                   <i className="las la-angle-right"></i>

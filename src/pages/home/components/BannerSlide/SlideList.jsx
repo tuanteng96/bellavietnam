@@ -54,7 +54,7 @@ export default class SlideList extends React.Component {
           <React.Fragment>
             {arrBanner && arrBanner.length > 0 && (
               <div className={this.props.containerClass}>
-                <div className={`body-slide ${this.props.className}`}>
+                <div className={`body-slide ${this.props.className || ''} slider-full`}>
                   <Slider {...settingsBanner}>
                     {arrBanner &&
                       arrBanner.map((item, index) => {

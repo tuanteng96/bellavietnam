@@ -1,5 +1,13 @@
 import React from "react";
-import { Link, Navbar, Page, Toolbar } from "framework7-react";
+import {
+  Link,
+  Navbar,
+  Page,
+  Subnavbar,
+  Tab,
+  Tabs,
+  Toolbar,
+} from "framework7-react";
 import Slider from "react-slick";
 import ReactHtmlParser from "react-html-parser";
 import NewsDataService from "../../../service/news.service";
@@ -7,6 +15,15 @@ import SkeletonNews from "../../news/SkeletonNews";
 import { SERVER_APP } from "../../../constants/config";
 import NotificationIcon from "../../../components/NotificationIcon";
 import ToolBarBottom from "../../../components/ToolBarBottom";
+
+import PerfectScrollbar from "react-perfect-scrollbar";
+
+const perfectScrollbarOptions = {
+  wheelSpeed: 5,
+  wheelPropagation: false,
+  suppressScrollY: true,
+  swipeEasing: false,
+};
 
 export default class extends React.Component {
   constructor() {
@@ -21,22 +38,15 @@ export default class extends React.Component {
     this.getNewsAll();
     this.getInfoCate();
   }
-  handStyle = () => {
-    const _width = this.state.width - 120;
-    return Object.assign({
-      width: _width,
-    });
-  };
 
-  getNewsAll = (callback) => {
-    NewsDataService.getNewsIdCate("11202")
+  getNewsAll = () => {
+    NewsDataService.getNewsIdCate("691")
       .then((response) => {
         const arrNews = response.data.data;
         this.setState({
-          arrNews: arrNews,
+          arrNews: arrNews.sort((a, b) => a.source.Order - b.source.Order),
           isLoading: false,
         });
-        callback && callback();
       })
       .catch((e) => {
         console.log(e);
@@ -44,7 +54,7 @@ export default class extends React.Component {
   };
 
   getInfoCate = () => {
-    NewsDataService.getInfoCate("11202")
+    NewsDataService.getInfoCate("691")
       .then(({ data }) => {
         this.setState({ NewTitle: data.data });
       })
@@ -55,7 +65,6 @@ export default class extends React.Component {
 
   async loadRefresh(done) {
     this.getNewsAll(() => done());
-    done();
   }
 
   render() {
@@ -82,37 +91,35 @@ export default class extends React.Component {
               <NotificationIcon />
             </div>
           </div>
+          <Subnavbar className="subnavbar-prod">
+            <PerfectScrollbar
+              options={perfectScrollbarOptions}
+              className="list-cate scroll-hidden scroll"
+            >
+              {arrNews &&
+                arrNews.map((item, index) => (
+                  <Link
+                    tabLink={`#tab-${index}`}
+                    key={index}
+                    tabLinkActive={index === 0}
+                  >
+                    {item.source.Title}
+                  </Link>
+                ))}
+            </PerfectScrollbar>
+          </Subnavbar>
         </Navbar>
         <div className="home-page__news mb-0">
           <div className="page-news__list">
-            <div className="page-news__list-ul">
-              {!isLoading && (
-                <div>
-                  {arrNews &&
-                    arrNews.map((item, index) => (
-                      <Link
-                        href={"/news/detail/" + item.id + "/"}
-                        className="page-news__list-item mb-15px"
-                        key={item.id}
-                      >
-                        <div className="images">
-                          <img
-                            src={SERVER_APP + item.source.Thumbnail_web}
-                            alt={item.source.Title}
-                          />
-                        </div>
-                        <div className="text">
-                          <h6>{item.source.Title}</h6>
-                          <div className="desc">
-                            {ReactHtmlParser(item.source.Desc)}
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                </div>
-              )}
-              {isLoading && <SkeletonNews />}
-            </div>
+            <Tabs animated>
+              {arrNews &&
+                arrNews.map((item, index) => (
+                  <Tab id={`tab-${index}`} tabActive={index === 0} key={index}>
+                    {ReactHtmlParser(item.source.Desc)}
+                    {ReactHtmlParser(item.source.Content)}
+                  </Tab>
+                ))}
+            </Tabs>
           </div>
         </div>
         <Toolbar tabbar position="bottom">
