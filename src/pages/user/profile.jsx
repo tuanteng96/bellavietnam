@@ -18,6 +18,8 @@ import {
   SET_BADGE,
 } from "../../constants/prom21";
 import { iOS } from "../../constants/helpers";
+import { toast } from "react-toastify";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 export default class extends React.Component {
   constructor() {
@@ -26,6 +28,7 @@ export default class extends React.Component {
       memberInfo: {},
       isLoading: true,
       showPreloader: false,
+      code: "",
     };
   }
   componentDidMount() {
@@ -33,6 +36,7 @@ export default class extends React.Component {
     //   ? infoUser.MobilePhone
     //   : infoUser.UserName;
     // const password = getPassword();
+    this.getCodeShare();
     UserService.getInfo()
       .then(({ data }) => {
         if (data.error) {
@@ -75,6 +79,22 @@ export default class extends React.Component {
     );
   };
 
+  getCodeShare = () => {
+    let User = getUser();
+    if (!User) return;
+    else {
+      let dataPost = {
+        FLink: {
+          CreateMemberID: User.ID,
+          MemberID: User.ID,
+        },
+      };
+      UserService.getFlink(dataPost).then(({ data }) => {
+        this.setState({ code: data.FLink.Code });
+      });
+    }
+  };
+
   checkMember = (memberInfo) => {
     if (!memberInfo) return false;
     if (memberInfo.acc_type === "M") {
@@ -103,7 +123,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const { memberInfo, isLoading } = this.state;
+    const { memberInfo, isLoading, code } = this.state;
     return (
       <Page
         name="profile-list"
@@ -155,6 +175,34 @@ export default class extends React.Component {
               <div className="group">
                 {this.checkMember(memberInfo && memberInfo)}
               </div>
+              {code && (
+                <div className="text-center mt-12px">
+                  <CopyToClipboard
+                    text={code}
+                    onCopy={() => {
+                      toast.success("Copy mã thành công !", {
+                        position: toast.POSITION.TOP_LEFT,
+                        autoClose: 1000,
+                      });
+                    }}
+                  >
+                    <div className="d--if bg-ezs fw-400 text-white rounded-sm overflow-hidden">
+                      <div className="px-10px py-5px font-size-xs">
+                        Mã giới thiệu
+                      </div>
+                      <div
+                        className="d-flex ai--c px-8px"
+                        style={{ background: "var(--ezs-color-gradient)" }}
+                      >
+                        {code}
+                      </div>
+                      <button className="w-auto border-0 font-size-lg">
+                        <i className="las la-copy"></i>
+                      </button>
+                    </div>
+                  </CopyToClipboard>
+                </div>
+              )}
             </div>
           )}
         </div>

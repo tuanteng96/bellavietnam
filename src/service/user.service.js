@@ -143,6 +143,12 @@ class UserService {
       JSON.stringify(data)
     );
   }
+  getFlink(data) {
+    return http.post(`/api/v3/flink@create`, JSON.stringify(data));
+  }
+  getFtree(data) {
+    return http.post(`/api/v3/ftree@get`, JSON.stringify(data));
+  }
 }
 
 export default new UserService();

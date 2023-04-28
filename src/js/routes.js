@@ -82,7 +82,7 @@ const checkRouterHome = () => {
 
     if (ACC_TYPE === "U") {
         if (infoUser.ID === 1) {
-            return ReportPage;
+            return HomeIndex;
         } else {
             const groupRole = infoUser.GroupTitles;
             if (groupRole.includes("service")) {

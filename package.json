@@ -37,6 +37,7 @@
         "moment": "^2.29.1",
         "nuka-carousel": "^4.7.7",
         "perfect-scrollbar": "^1.5.5",
+        "performant-array-to-tree": "^1.11.0",
         "postcss": "^8.1.0",
         "prop-types": "^15.7.2",
         "querystring": "^0.2.0",
