@@ -149,6 +149,9 @@ class UserService {
   getFtree(data) {
     return http.post(`/api/v3/ftree@get`, JSON.stringify(data));
   }
+  getForder(data) {
+    return http.post(`/api/v3/forder@get`, JSON.stringify(data));
+  }
 }
 
 export default new UserService();

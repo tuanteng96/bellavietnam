@@ -13,6 +13,7 @@ export default class extends React.Component {
     super();
     this.state = {
       data: [],
+      CurrentAff: {}
     };
   }
   componentDidMount() {
@@ -56,6 +57,12 @@ export default class extends React.Component {
               TreeList[0].children.length > 0
                 ? TreeList[0].children
                 : [],
+            CurrentAff: {
+              ...User,
+              TotalChild: data.TotalChild,
+              TotalChildF0:
+                TreeList && TreeList[0].children && TreeList[0].children.length || 0,
+            },
           });
         })
         .catch((err) => console.log(err));
@@ -67,7 +74,8 @@ export default class extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, CurrentAff } = this.state;
+    console.log(data);
     return (
       <Page
         name="profile-list"
@@ -97,10 +105,14 @@ export default class extends React.Component {
             style={{ background: "#f1f1f1", padding: "15px" }}
           >
             <div className="text-center fw-600">
-              Nguyễn Tài Tuấn
-              <span className="pl-5px">- Tổng 8 thành viên</span>
+              {CurrentAff?.FullName}
+              <span className="pl-5px">
+                - Tổng {CurrentAff?.TotalChild} thành viên
+              </span>
             </div>
-            <div className="text-center fw-600">(F1) - 2 thành viên</div>
+            <div className="text-center fw-600">
+              (F1) - {CurrentAff?.TotalChildF0} thành viên
+            </div>
           </div>
           {data &&
             data.map((item, index) => (

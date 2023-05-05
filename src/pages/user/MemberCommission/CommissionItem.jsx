@@ -1,18 +1,55 @@
-import React, { useState } from "react";
-import { checkAvt } from "../../../constants/format";
+import React, { useEffect, useState } from "react";
+import { checkAvt, formatPriceVietnamese } from "../../../constants/format";
 import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
+import { Sheet } from "framework7-react";
+import userService from "../../../service/user.service";
 
 function CommissionItem({ data }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [List, setList] = useState([]);
+
+  useEffect(() => {
+    if (opened) {
+      getListOrder();
+    }
+  }, [opened]);
+
+  const getListOrder = () => {
+    setLoading(true);
+    const memberPost = {
+      MemberID: data?.ID,
+    };
+    userService
+      .getForder(memberPost)
+      .then(({ data }) => {
+        setList(data.Lst);
+        setLoading(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="border-bottom d--f p-15px">
       <div className="w-50px d--f jc--c ai--c">
         <img className="rounded-circle" src={checkAvt("null.gif")} />
       </div>
-      <div className="f--1 px-15px">
+      <div className="f--1 px-15px" onClick={() => setOpened(true)}>
         <div className="fw-600">{data.FullName}</div>
         <div className="text-muted2">{data?.MobilePhone}</div>
-        <div className="text-primary">80 Đ.Hàng - H.Hồng 250.000</div>
+        <div className="text-primary">
+          {data?.OrderCount} Đ.Hàng -
+          <span className="px-3px">
+            Tổng {formatPriceVietnamese(data?.OrderValue)}
+          </span>
+        </div>
+        <div className="text-primary">
+          <span className="pr-3px">
+            {formatPriceVietnamese(data?.FBonusValue)}
+          </span>
+          H.Hồng
+        </div>
       </div>
       {data.children && data.children.length > 0 && (
         <div
@@ -58,6 +95,67 @@ function CommissionItem({ data }) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Sheet
+        opened={opened}
+        className="demo-sheet-swipe-to-step"
+        style={{
+          height:
+            "calc(100% - calc(var(--f7-navbar-height) + var(--f7-safe-area-top)))",
+          "--f7-sheet-bg-color": "#fff",
+        }}
+        onSheetClosed={() => setOpened(false)}
+        backdrop
+      >
+        <div className="d--f fd--c h-100">
+          <div className="p-15px border-bottom">
+            <div className="fw-600">
+              {data?.FullName} - {data?.MobilePhone}
+            </div>
+            <div className="text-primary">
+              {data?.OrderCount} Đ.Hàng -
+              <span className="px-3px">
+                Tổng {formatPriceVietnamese(data?.OrderValue)}
+              </span>
+              <span className="px-3px">
+                - {formatPriceVietnamese(data?.FBonusValue)}
+              </span>
+              H.Hồng
+            </div>
+          </div>
+          <div className="fg--1 overflow-auto">
+            {loading && "Đang tải ..."}
+            {!loading && (
+              <>
+                {List &&
+                  List.map((item, index) => (
+                    <div className="p-15px border-bottom" key={index}>
+                      <div className="fw-600">
+                        Đơn hàng
+                        <span className="text-danger pl-3px">
+                          #{item.Order.ID}
+                        </span>
+                      </div>
+                      {item.Items &&
+                        item.Items.map((order, idx) => (
+                          <div className="d--f jc--sb mt-8px" key={idx}>
+                            <div>
+                              <div>{order?.ProdTitle}</div>
+                              <div>{formatPriceVietnamese(order?.Price)}</div>
+                            </div>
+                            <div className="text-right">
+                              <div>x{order?.Qty}</div>
+                              <div>{formatPriceVietnamese(order?.ToPay)}</div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
+        </div>
+      </Sheet>
     </div>
   );
 }
