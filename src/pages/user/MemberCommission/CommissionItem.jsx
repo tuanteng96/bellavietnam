@@ -32,7 +32,7 @@ function CommissionItem({ data }) {
 
   return (
     <div className="border-bottom d--f p-15px">
-      <div className="w-50px d--f jc--c ai--c">
+      <div className="w-50px d--f jc--c ai--c" onClick={() => setOpened(true)}>
         <img className="rounded-circle" src={checkAvt("null.gif")} />
       </div>
       <div className="f--1 px-15px" onClick={() => setOpened(true)}>

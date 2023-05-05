@@ -75,7 +75,7 @@ export default class extends React.Component {
 
   render() {
     const { data, CurrentAff } = this.state;
-    console.log(data);
+    
     return (
       <Page
         name="profile-list"
