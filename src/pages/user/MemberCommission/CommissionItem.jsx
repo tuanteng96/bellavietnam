@@ -30,6 +30,8 @@ function CommissionItem({ data }) {
       .catch((error) => console.log(error));
   };
 
+  let ChildrenCount = window?.GlobalConfig?.APP?.ChildrenCount || 1000;
+  
   return (
     <div className="border-bottom d--f p-15px">
       <div className="w-50px d--f jc--c ai--c" onClick={() => setOpened(true)}>
@@ -39,19 +41,19 @@ function CommissionItem({ data }) {
         <div className="fw-600">{data.FullName}</div>
         <div className="text-muted2">{data?.MobilePhone}</div>
         <div className="text-primary">
-          {data?.OrderCount} Đ.Hàng -
+          Đ.Hàng : {data?.OrderCount} -
           <span className="px-3px">
-            Tổng {formatPriceVietnamese(data?.OrderValue)}
+            Tổng : {formatPriceVietnamese(data?.OrderValue)}
           </span>
         </div>
         <div className="text-primary">
-          <span className="pr-3px">
+          H.Hồng :
+          <span className="pl-3px">
             {formatPriceVietnamese(data?.FBonusValue)}
           </span>
-          H.Hồng
         </div>
       </div>
-      {data.children && data.children.length > 0 && (
+      {data.level < ChildrenCount && data.children && data.children.length > 0 && (
         <div
           className="w-45px text-right d--f jc--e ai--c"
           onClick={() => setIsOpen(true)}
