@@ -133,7 +133,7 @@ class MM {
       return item.Type === "MUA_HANG" ||
         item.Type === "GIOI_THIEU" ||
         item.Type === "CHIA_SE_MAGIAMGIA"
-        ? item.Order?.RemainPay === 0
+        ? item.Order?.RemainPay === 0 && item.Order?.OrderRemainPay === 0
         : item;
     }).reduce((n, { Value }) => n + Value, 0);
   }
@@ -380,7 +380,7 @@ export default class extends React.Component {
                         <span className="number">
                           {formatPriceVietnamese(
                             (totalWallet && totalWallet) -
-                            (demonsWallet && demonsWallet)
+                              (demonsWallet && demonsWallet)
                           )}
                         </span>
                         <span className="text">Chờ xử lý</span>
@@ -441,8 +441,8 @@ export default class extends React.Component {
           </Tab>
           <Tab className="h-100" id="card" tabActive={tabCurrent === "card"}>
             <div className="wallet-card">
-              {arrCardWallet &&
-                arrCardWallet.length > 0 ? arrCardWallet.map((item, index) => (
+              {arrCardWallet && arrCardWallet.length > 0 ? (
+                arrCardWallet.map((item, index) => (
                   <div className="wallet-card-item" key={index}>
                     <div className="total">
                       <div className="total-left">
@@ -490,22 +490,30 @@ export default class extends React.Component {
                       <div className="info-item">
                         <div className="info-item-title">Hạn dùng</div>
                         <div
-                          className={`info-item-value ${moment().diff(item.han_dung, "minutes") < 0
-                            ? ""
-                            : "text-red"
-                            }`}
+                          className={`info-item-value ${
+                            moment().diff(item.han_dung, "minutes") < 0
+                              ? ""
+                              : "text-red"
+                          }`}
                         >
-                          {!item.han_dung ? "Không giới hạn" : (<React.Fragment>
-                            {item.han_dung && moment().diff(item.han_dung, "minutes") < 0
-                              ? moment(item.han_dung).format("DD/MM/YYYY")
-                              : "Hết hạn"}
-                          </React.Fragment>)}
-
+                          {!item.han_dung ? (
+                            "Không giới hạn"
+                          ) : (
+                            <React.Fragment>
+                              {item.han_dung &&
+                              moment().diff(item.han_dung, "minutes") < 0
+                                ? moment(item.han_dung).format("DD/MM/YYYY")
+                                : "Hết hạn"}
+                            </React.Fragment>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
-                )) : <PageNoData text="Chưa có thẻ tiền" />}
+                ))
+              ) : (
+                <PageNoData text="Chưa có thẻ tiền" />
+              )}
               <WalletCardModal
                 sheetOpened={sheetOpened}
                 hideOpenSheet={this.hideOpenSheet}
