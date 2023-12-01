@@ -18,10 +18,12 @@ import { getUser } from "../../constants/user";
 import { maxBookDate, formatPriceVietnamese } from "../../constants/format";
 import moment from "moment";
 import "moment/locale/vi";
-import NotificationIcon from "../../components/NotificationIcon";
 import WalletCardModal from "./Wallet/WalletCardModal";
 import Skeleton from "react-loading-skeleton";
 import PageNoData from "../../components/PageNoData";
+import PickerFilter from "./components/PickerFilter";
+import { RiFilter2Line } from "react-icons/ri";
+
 moment.locale("vi");
 
 const MUA_HANG = "MUA_HANG";
@@ -174,7 +176,6 @@ export default class extends React.Component {
       totalWallet: 0, // Ví
       demonsWallet: 0, // Quỷ
       depositWallet: 0, // Đặt cọc
-      showPreloader: false,
       arrCardWallet: [],
       tabCurrent: "wallet",
       sheetOpened: {
@@ -183,20 +184,32 @@ export default class extends React.Component {
         item: null,
       },
       loading: false,
+      Filters: {
+        To: "",
+        From: "",
+      },
     };
   }
   componentDidMount() {
     this.getWallet();
-    this.getCardWallet();
+    //this.getCardWallet();
   }
 
-  getWallet = () => {
+  getWallet = (filter, callback) => {
     const infoUser = getUser();
     if (!infoUser) return false;
     const memberid = infoUser.ID;
     var bodyFormData = new FormData();
     bodyFormData.append("cmd", "list_money");
     bodyFormData.append("MemberID", memberid);
+    bodyFormData.append(
+      "from",
+      filter?.From ? moment(filter?.From).format("YYYY-MM-DD") : ""
+    );
+    bodyFormData.append(
+      "to",
+      filter?.To ? moment(filter?.To).format("YYYY-MM-DD") : ""
+    );
     this.setState({ loading: true });
     UserService.getWallet(bodyFormData)
       .then((response) => {
@@ -212,6 +225,7 @@ export default class extends React.Component {
           //depositWallet: mm.sumAvai(false), // Đặt cọc,
           loading: false,
         });
+        callback && callback();
       })
       .catch((e) => console.log(e));
   };
@@ -296,13 +310,24 @@ export default class extends React.Component {
     });
   };
 
+  onFilters = (values, close) => {
+    this.setState({
+      ...this.state.Filters,
+      member_from: values?.From || "",
+      member_to: values?.To || "",
+    });
+
+    this.$f7.dialog.preloader("Đang thực hiện ...");
+    this.getWallet(values, () => {
+      this.$f7.dialog.close();
+      close();
+    });
+  };
+
   loadRefresh(done) {
     setTimeout(() => {
-      this.setState({
-        showPreloader: true,
-      });
       this.getWallet();
-      this.getCardWallet();
+      // this.getCardWallet();
       done();
     }, 600);
   }
@@ -324,8 +349,6 @@ export default class extends React.Component {
         name="wallet"
         className="wallet"
         ptr
-        infiniteDistance={50}
-        infinitePreloader={this.state.showPreloader}
         onPtrRefresh={this.loadRefresh.bind(this)}
       >
         <Navbar>
@@ -339,7 +362,21 @@ export default class extends React.Component {
               <span className="title">Ví điện tử</span>
             </div>
             <div className="page-navbar__noti">
-              <NotificationIcon />
+              <PickerFilter
+                initialValues={{
+                  To: this.state.Filters.To,
+                  From: this.state.Filters.To,
+                }}
+                onSubmit={this.onFilters}
+              >
+                {({ open }) => (
+                  <div className="page-navbar__noti noti" onClick={open}>
+                    <Link noLinkClass>
+                      <RiFilter2Line />
+                    </Link>
+                  </div>
+                )}
+              </PickerFilter>
             </div>
           </div>
         </Navbar>
@@ -416,25 +453,35 @@ export default class extends React.Component {
                           </div>
                         </li>
                       ))}
-                  {!loading &&
-                    arrWallet &&
-                    arrWallet.map((item, index) => (
-                      <li
-                        className={item.Value > 0 ? "add" : "down"}
-                        key={index}
-                      >
-                        <div className="price">
-                          <div className="price-number">
-                            {item.Value > 0 ? "+" : ""}
-                            {formatPriceVietnamese(item.Value)}
-                          </div>
-                          <div className="price-time">
-                            {moment(item.CreateDate).fromNow()}
-                          </div>
-                        </div>
-                        <div className="note">{this.vietnamesText(item)}</div>
-                      </li>
-                    ))}
+                  {!loading && (
+                    <>
+                    {
+                      (!arrWallet || arrWallet.length === 0) && (
+                        <div>Không có dữ liệu.</div>
+                      )
+                    }
+                      {arrWallet &&
+                        arrWallet.map((item, index) => (
+                          <li
+                            className={item.Value > 0 ? "add" : "down"}
+                            key={index}
+                          >
+                            <div className="price">
+                              <div className="price-number">
+                                {item.Value > 0 ? "+" : ""}
+                                {formatPriceVietnamese(item.Value)}
+                              </div>
+                              <div className="price-time">
+                                {moment(item.CreateDate).fromNow()}
+                              </div>
+                            </div>
+                            <div className="note">
+                              {this.vietnamesText(item)}
+                            </div>
+                          </li>
+                        ))}
+                    </>
+                  )}
                 </ul>
               </div>
             </div>

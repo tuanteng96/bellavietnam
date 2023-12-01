@@ -32,6 +32,7 @@ import QuickAction from '../../components/quickAction'
 // );
 import ProductList from '../home/components/Product/ProductList'
 import ModalChangePWD from '../../components/ModalChangePWD'
+import Testimonials from './components/Testimonials/Testimonials'
 
 export default class extends React.Component {
   constructor() {
@@ -236,7 +237,7 @@ export default class extends React.Component {
                 className={`banner-main bg-white ${
                   window.GlobalConfig.APP.Home?.SliderFull
                     ? "mb-8px"
-                    : "px-15px pt-15px"
+                    : "px-15px pt-15px pb-15px"
                 } `}
                 BannerName="App.Main"
                 autoplaySpeed={4000}
@@ -257,6 +258,7 @@ export default class extends React.Component {
 
               <ProductList Status="1" Title="Sản phẩm mới" Ps={4} />
               <ProductList Status="3" Title="Sản phẩm Sale" Ps={4} />
+              <Testimonials />
               <NewsList />
             </div>
           </div>

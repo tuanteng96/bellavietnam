@@ -321,3 +321,18 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
+
+@for $i from 1 through 10 {
+    .cut-text-#{$i} {
+        @include cut-text-to(#{$i})
+    }
+    
+    .cut-text-#{$i} p:first-child {
+        margin-top: 0;
+    }
+    
+    .cut-text-#{$i} p:last-child {
+        margin-bottom: 0;
+    }
+}
+

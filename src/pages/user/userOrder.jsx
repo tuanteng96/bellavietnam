@@ -119,7 +119,12 @@ export default class extends React.Component {
             <div className="page-navbar__title">
               <span className="title">
                 Đơn hàng
-                {TongNo && <span className="pl-2px font-size-sm"> - Nợ {formatPriceVietnamese(TongNo)}</span>}
+                {TongNo > 0 && (
+                  <span className="pl-2px font-size-sm">
+                    {" "}
+                    - Nợ {formatPriceVietnamese(TongNo)}
+                  </span>
+                )}
               </span>
             </div>
             <div className="page-navbar__noti">
@@ -208,10 +213,21 @@ export default class extends React.Component {
                         {item.Items &&
                           item.Items.map((sub, idx) => (
                             <div className="list-sub-item" key={idx}>
-                              <div className={clsx("img", window?.GlobalConfig?.APP?.UIBase && 'd-none')}>
+                              <div
+                                className={clsx(
+                                  "img",
+                                  window?.GlobalConfig?.APP?.UIBase && "d-none"
+                                )}
+                              >
                                 <img src={checkImageProduct(sub.ProdThumb)} />
                               </div>
-                              <div className={clsx("text", window?.GlobalConfig?.APP?.UIBase && 'w-100 pl-0')}>
+                              <div
+                                className={clsx(
+                                  "text",
+                                  window?.GlobalConfig?.APP?.UIBase &&
+                                    "w-100 pl-0"
+                                )}
+                              >
                                 <div className="text-name">{sub.ProdTitle}</div>
                                 <div className="text-count">
                                   SL <b>x{sub.Qty}</b>
