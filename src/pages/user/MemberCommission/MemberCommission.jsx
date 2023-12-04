@@ -25,13 +25,18 @@ export default class extends React.Component {
           "FullName",
           "FPaths",
           "FParentID",
+          "OrderValue",
+          "OrderCount",
+          "FValue",
+          "FBonusValue",
+          "FPlusValue",
         ],
-        JSONSkips: ["Present"],
-        select: "m.ID, m.FullName, m.FPaths, m.FParentID",
+        JSONSkips: [],
+        select: "m.ID, m.FullName, m.FPaths, m.FParentID,m.Present",
         member_from: "",
         member_to: "",
         value_from: "", // neu ko truyen thi se lay theo member_from
-        value_to: "", // neu ko truyen thif se lay theo value_to
+        value_to: "",
       },
     };
   }
@@ -141,7 +146,10 @@ export default class extends React.Component {
               <span className="title">Thành viên & hoa hồng</span>
             </div>
             <PickerFilter
-              initialValues={{ To: this.state.Filters.To, From: this.state.Filters.To }}
+              initialValues={{
+                To: this.state.Filters.To,
+                From: this.state.Filters.To,
+              }}
               onSubmit={this.onFilters}
             >
               {({ open }) => (
