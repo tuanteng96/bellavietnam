@@ -312,9 +312,11 @@ export default class extends React.Component {
 
   onFilters = (values, close) => {
     this.setState({
-      ...this.state.Filters,
-      member_from: values?.From || "",
-      member_to: values?.To || "",
+      Filters: {
+        ...this.state.Filters,
+        From: values?.From || "",
+        To: values?.To || "",
+      },
     });
 
     this.$f7.dialog.preloader("Đang thực hiện ...");
@@ -325,11 +327,9 @@ export default class extends React.Component {
   };
 
   loadRefresh(done) {
-    setTimeout(() => {
-      this.getWallet();
-      // this.getCardWallet();
+    this.getWallet(this.state.Filters, () => {
       done();
-    }, 600);
+    });
   }
 
   render() {
@@ -455,11 +455,9 @@ export default class extends React.Component {
                       ))}
                   {!loading && (
                     <>
-                    {
-                      (!arrWallet || arrWallet.length === 0) && (
+                      {(!arrWallet || arrWallet.length === 0) && (
                         <div>Không có dữ liệu.</div>
-                      )
-                    }
+                      )}
                       {arrWallet &&
                         arrWallet.map((item, index) => (
                           <li

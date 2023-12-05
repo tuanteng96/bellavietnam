@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion/dist/framer-motion";
 import { Sheet } from "framework7-react";
 import userService from "../../../service/user.service";
 import { createPortal } from "react-dom";
+import moment from "moment";
 
 function CommissionItem({ data }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -145,6 +146,9 @@ function CommissionItem({ data }) {
                         Đơn hàng
                         <span className="text-danger pl-3px">
                           #{item.Order.ID}
+                        </span>
+                        <span className="pl-3px">
+                          - {moment(item.Order.CreateDate).format("HH:mm DD-MM-YYYY")}
                         </span>
                       </div>
                       {item.Items &&
